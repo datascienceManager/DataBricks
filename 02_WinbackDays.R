@@ -25,3 +25,43 @@ df_winback <- df %>%
     )
   ) %>%
   ungroup()
+
+
+
+#------ Sparklyr 
+
+library(dplyr)
+library(sparklyr)
+
+df_winback <- df %>%
+  # 1. Create row order (VERY IMPORTANT)
+  mutate(row_id = monotonically_increasing_id()) %>%
+  
+  # 2. Convert to Date
+  mutate(
+    StartDate = to_date(StartDate, "MM/dd/yyyy"),
+    ExpD      = to_date(ExpD, "MM/dd/yyyy")
+  ) %>%
+  
+  group_by(ID) %>%
+  
+  # 3. Preserve original row order
+  arrange(row_id, .by_group = TRUE) %>%
+  
+  # 4. Compute previous max ExpD
+  mutate(
+    prev_max_ExpD = lag(max(ExpD) %>% over(
+      partition_by(ID),
+      order_by(row_id),
+      frame = c(-Inf, -1)
+    )),
+    
+    `Diff between StartD-ExpD` = if_else(
+      !is.na(prev_max_ExpD) & StartDate > prev_max_ExpD,
+      datediff(StartDate, prev_max_ExpD),
+      as.integer(NA)
+    )
+  ) %>%
+  ungroup()
+
+
