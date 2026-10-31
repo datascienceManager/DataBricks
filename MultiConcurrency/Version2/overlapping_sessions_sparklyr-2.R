@@ -78,25 +78,22 @@ sessions_in_runs <- sessions %>%
   dplyr::summarise(n_sessions = dplyr::n_distinct(convivasessionid)) %>%
   dplyr::ungroup()
 
-# ---- 7. Session-level detail for every overlapping session ----------------
-# One row per session per qualifying run.
+# ---- 7. The overlapping sessions themselves (one row per session) ---------
+# Every session that played during a run of 3+ concurrent sessions lasting > 5 min.
 overlap_sessions <- sessions %>%
   dplyr::inner_join(hot_runs, by = c("viewerId", "asset_id")) %>%
   dplyr::filter(st < run_end, en > run_start) %>%
+  dplyr::distinct(viewerId, asset_id, convivasessionid, deviceid, device_type,
+                  st, playing_min) %>%
   dplyr::transmute(viewerId,
                    asset_id,
-                   run_id,
                    convivasessionid,
                    deviceid,
                    device_type,
                    starttimeunixtime = st,
-                   start_utc         = from_unixtime(st),      # Spark SQL function
-                   playingtimemin    = playing_min,
-                   run_start_utc     = from_unixtime(run_start),
-                   run_end_utc       = from_unixtime(run_end),
-                   run_min           = run_secs / 60,
-                   peak_concurrent) %>%
-  dplyr::arrange(viewerId, asset_id, run_id, starttimeunixtime) %>%
+                   start_utc         = from_unixtime(st),   # Spark SQL function
+                   playingtimemin    = playing_min) %>%
+  dplyr::arrange(viewerId, asset_id, starttimeunixtime) %>%
   dplyr::collect()
 
 # ---- 8. Final result -------------------------------------------------------
