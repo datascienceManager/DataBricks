@@ -28,7 +28,7 @@
 # DBTITLE 1,Load data
 library(AzureStor)#survivalanalysis
 
-bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobAccessMLBMan07", key = "SportsBlobPS01"))
+bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobAccessMLBMa", key = "SportsBlobPS"))
 
 list_storage_containers(bl_endp_key2)
 
