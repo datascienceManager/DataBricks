@@ -65,7 +65,7 @@ ggsave("/dbfs/tmp/winback_plot.png", plot = P, width = 8, height = 5, dpi = 300)
 library(AzureStor)
 
 
-bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobAccessMLBMan07", key = "SportsBlobPS01"))
+bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "Blob", key = "Blob"))
 
 list_storage_containers(bl_endp_key2)
 
@@ -104,7 +104,7 @@ library(AzureStor)
 # COMMAND ----------
 
 
-# bl_endp_key <- storage_endpoint("https://stordatabricksprodtod.blob.core.windows.net", key= dbutils.secrets.get(scope = "SportsPkey", key = "SportsBlobPS"))
+# bl_endp_key <- storage_endpoint("https://stordatabricksprodtod.blob.core.windows.net", key= dbutils.secrets.get(scope = "Sp", key = "Sport"))
 
 # COMMAND ----------
 
@@ -112,9 +112,9 @@ library(AzureStor)
 
 #https://mlblobman-secondary.blob.core.windows.net/
 
-# bl_endp_key2 <- storage_endpoint("https://mlblobman.blob.core.windows.net", key= dbutils.secrets.get(scope = "mlstorage7", key = "mlman7"))
+# bl_endp_key2 <- storage_endpoint("https://mlblobman.blob.core.windows.net", key= dbutils.secrets.get(scope = "mls", key = "ml"))
 
-bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobAccessMLBMan07", key = "SportsBlobPS01"))
+bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobA", key = "Sp"))
 
 #bl_endp_key2 <- storage_endpoint("https://mlblobman.blob.core.windows.net", key= bb)
 
@@ -156,7 +156,7 @@ storage_write_csv(mtcars_test, cont, "mtcars_test.csv")
 
 library(AzureStor)
 
-bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobAccessMLBMan07", key = "SportsBlobPS01"))
+bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "Blob", key = "Sp"))
 
 list_storage_containers(bl_endp_key2)
 
@@ -425,7 +425,7 @@ display(AssetIDMappingTable_df)
 
 library(AzureStor)
 
-bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobAccessMLBMan07", key = "SportsBlobPS01"))
+bl_endp_key2 <- storage_endpoint("https://mlblobman01.blob.core.windows.net/", key= dbutils.secrets.get(scope = "BlobA", key = "Spo"))
 
 list_storage_containers(bl_endp_key2)
 
